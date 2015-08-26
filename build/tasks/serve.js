@@ -10,9 +10,8 @@ gulp.task('serve', ['build'], function(done) {
 	var proxyOptions = {target:"http://barney.stat.wvu.edu:8088/"};
 	var proxy = httpProxy.createProxyServer(proxyOptions);
 	var proxyMiddleware = function(req, res, next) {
-		console.log('proxy considering:' + req.url);
 		if (req.url.indexOf('/api') != -1) {
-			console.log('using proxy');
+			console.log('using proxy:' + req.url);
 			req.url = req.url.substring(5);
 			return proxy.web(req, res);
 		} else {
@@ -37,7 +36,6 @@ gulp.task('serve', ['build'], function(done) {
 						proxyMiddleware(req, res, next);
 				},
 				function (req, res, next) {
-					console.log("adding acces conrl");
 					res.setHeader('Access-Control-Allow-Origin', '*');
 					next();
 				}]

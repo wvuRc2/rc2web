@@ -7,6 +7,7 @@ export class App {
     config.map([
       { route: ['','welcome'],  name: 'welcome',      moduleId: 'welcome',      nav: true, title:'Welcome' },
       { route: 'login',         name: 'login',        moduleId: 'login',        nav: true, title:'Login to rc2' },
+      { route: 'wspaces',         name: 'wspaces',        moduleId: 'wspaces',        nav: true, title:'Workspaces' },
       { route: 'child-router',  name: 'child-router', moduleId: 'child-router', nav: true, title:'Child Router' }
     ]);
 
