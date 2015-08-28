@@ -1,8 +1,12 @@
 <template>
 <div class="container">
 
-  <form class="form-signin" submit.delegate="doLogin()">
+  <form class="form-signin">
     <h2 class="form-signin-heading">Please sign in ${state.login}</h2>
+    <div class="form-group has-error" if.bind="hadError">
+    <span class="glyphicon glyphicon-remove"></span>
+    Either your login or password are incorrect
+    </div>
     <label for="inputLogin" class="sr-only">Login</label>
     <input type="text" id="inputLogin" class="form-control" value.bind="login" placeholder="login" required autofocus>
     <label for="inputPassword" class="sr-only">Password</label>
@@ -12,7 +16,7 @@
         <input type="checkbox" value="remember-me"> Remember me
       </label>
     </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <button class="btn btn-lg btn-primary btn-block" click.delegate="doLogin()">Sign in</button>
   </form>
 
 </div> <!-- /container -->

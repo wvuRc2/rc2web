@@ -1,5 +1,6 @@
 import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-fetch-client';
+import 'fetch';
 
 class rc2stateClass {
 	constructor() {
@@ -12,17 +13,23 @@ class rc2stateClass {
 		this.headers = {'Accept': 'application/json', 'Content-Type': 'application/json',
 			'Access-Control-Allow-Credentials': 'true'};
 		this.http.configure(config => {
-			config.useStandardConfiguration()
-				.withBaseUrl("/api");
+			config
+				.withBaseUrl("/api")
+				.withDefaults({
+					credientals: 'same-origin',
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json',
+						'Access-Control-Allow-Credentials': 'true'
+					}
+				});
 		});
 	}
 	
-	getLogin() { return this.login; }
-
 	attemptLogin(theLogin, thePassword) {
 		let me = Rc2State;
 		let body = JSON.stringify({login:theLogin, password:thePassword})
-		var promise = new Promise( function(resolve, reject) {
+		var promise = new Promise(function(resolve, reject) {
 			me.http.fetch("/login", {	method: 'post', 
 									headers:me.headers,
 									credentials: 'include',
@@ -33,6 +40,8 @@ class rc2stateClass {
 						me.loggedInWithJson(objs)
 						resolve(objs)
 					});
+				} else {
+					reject(new RemoteError("unauthorized", res.status));
 				}
 			})
 			.catch(err => { reject(err); });
@@ -42,9 +51,8 @@ class rc2stateClass {
 	
 	loggedInWithJson(json) {
 		let me = Rc2State;
-		let me.loginToken = json.token;
+		me.loginToken = json.token;
 		me.headers['RC2-Auth'] = json.token;
-		console.log("token=" + me.loginToken);
 		let d = json.user;
 		me.loggedIn = true;
 		me.userId = d["id"];
@@ -52,8 +60,30 @@ class rc2stateClass {
 			me[aProp] = d[aProp];
 		}
 		//need to parse workspace/file information
+		
+		//adjust our http config to include the auth header
+		this.http.configure(config => {
+			config
+				.withBaseUrl("/api")
+				.withDefaults({
+					credientals: 'same-origin',
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json',
+						'Access-Control-Allow-Credentials': 'true',
+						'RC2-Auth': me.loginToken
+					}
+				});
+		});
 	}
 }
 
 let Rc2State = new rc2stateClass();
 export default Rc2State;
+
+export class RemoteError extends TypeError {
+	constructor(message, status) {
+		super(message);
+		this.status = status;
+	}
+}
