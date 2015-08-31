@@ -26,6 +26,36 @@ class rc2stateClass {
 		});
 	}
 	
+	verifyLogin() {
+		let me = Rc2State;
+		let myHeaders = JSON.parse(JSON.stringify(me.headers));
+		let auth = window.localStorage.getItem("lastAuthToken");
+		if (typeof auth === 'undefined') {
+			return new Promise(function(resolve,reject) {
+				reject(new RemoteError("unauthorized", 401));
+			});
+		}
+		myHeaders["RC2-Auth"] = auth;
+		var promise = new Promise(function(resolve, reject) {
+			me.http.fetch("/login", {	method: 'get', 
+									headers:myHeaders,
+									credentials: 'include',
+									})
+			.then(res => {
+				if (res.status === 200) {
+					res.json().then(objs => {
+						me.loggedInWithJson(objs)
+						resolve(objs)
+					});
+				} else {
+					reject(new RemoteError("unauthorized", res.status));
+				}
+			})
+			.catch(err => { reject(err); });
+		});
+		return promise;
+	}
+	
 	attemptLogin(theLogin, thePassword) {
 		let me = Rc2State;
 		let body = JSON.stringify({login:theLogin, password:thePassword})
@@ -60,7 +90,13 @@ class rc2stateClass {
 			me[aProp] = d[aProp];
 		}
 		//need to parse workspace/file information
+		var wspaces = [];
+		for (let aWspace of json.workspaces) {
+			wspaces.push(new Workspace(aWspace));
+		}
+		this.workspaces = wspaces;
 		
+		window.localStorage.setItem("lastAuthToken", json.token);
 		//adjust our http config to include the auth header
 		this.http.configure(config => {
 			config
@@ -85,5 +121,14 @@ export class RemoteError extends TypeError {
 	constructor(message, status) {
 		super(message);
 		this.status = status;
+	}
+}
+
+export class Workspace {
+	constructor(jsonObj) {
+		this.id = jsonObj["id"];
+		this.version = jsonObj["version"];
+		this.name = jsonObj["name"];
+		this.userId = jsonObj["userId"];
 	}
 }

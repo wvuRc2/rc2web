@@ -3,5 +3,18 @@
 
 <h1>Workspaces(${state.login})</h1>
 
+<div class="row">
+
+	<div id="wspaceList" class="col-md-6">
+		<ul class="wspaceList">
+		<li class="wspaceEntry" repeat.for="row of state.workspaces">${row.name}</li>
+		</ul>
+	</div>
+
+	<div id="wspaceDetails" class="col-md-6">
+	Details
+	</div>
+
+</div>
 </div> <!-- /container -->
 </template>
