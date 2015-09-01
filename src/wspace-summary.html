@@ -1,10 +1,10 @@
 <template>
 <require from="file-summary"></require>
-<div class="wspaceSummary">
+<div class="wspaceSummary" id="wspaceSummary${wspace.id}">
 
-<h3>${wspace.name}</h3>
-	<ul>
-	<li class="wspaceFileEntry" repeat.for="row of wspace.files">
+<h3><a data-toggle="collapse" data-parent="#wspaceSummary${wspace.id}" href="#wgrp-${wspace.id}">${wspace.name}</a></h3>
+	<ul class="wspaceGroup collapse" id="wgrp-${wspace.id}">
+	<li repeat.for="row of wspace.files">
 	<file-summary file.bind="row"></file-summary></li>
 	</ul>
 		

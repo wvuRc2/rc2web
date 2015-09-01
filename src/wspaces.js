@@ -8,9 +8,6 @@ export class wspaces {
 		this.state = state;
 	}
 	
-	activate() {
-		console.log("wspaceList activated");
-	}
 }
 
 
