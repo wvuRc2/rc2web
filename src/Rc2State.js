@@ -124,11 +124,27 @@ export class RemoteError extends TypeError {
 	}
 }
 
+export class File {
+	constructor(jsonObj) {
+		this.lastModified = new Date(0);
+		this.lastModified.setSeconds(jsonObj["lastModified"]/1000);
+		this.id = jsonObj["id"];
+		this.version = jsonObj["version"];
+		this.name = jsonObj["name"];
+		this.fileSize = jsonObj["fileSize"];
+	}
+};
+
 export class Workspace {
 	constructor(jsonObj) {
 		this.id = jsonObj["id"];
 		this.version = jsonObj["version"];
 		this.name = jsonObj["name"];
 		this.userId = jsonObj["userId"];
+		var files = [];
+		for (let aFile of jsonObj["files"]) {
+			files.push(new File(aFile));
+		}
+		this.files = files;
 	}
 }

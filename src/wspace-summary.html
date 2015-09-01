@@ -1,0 +1,12 @@
+<template>
+<require from="file-summary"></require>
+<div class="wspaceSummary">
+
+<h3>${wspace.name}</h3>
+	<ul>
+	<li class="wspaceFileEntry" repeat.for="row of wspace.files">
+	<file-summary file.bind="row"></file-summary></li>
+	</ul>
+		
+</div>
+</template>
