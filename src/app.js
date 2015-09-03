@@ -14,7 +14,8 @@ export class App {
 		config.map([
 		  { route: ['','welcome'],  name: 'welcome',      moduleId: 'welcome',      nav: true, title:'Welcome' },
 		  { route: 'login',         name: 'login',        moduleId: 'login',        nav: true, title:'Login' },
-		  { route: 'wspaces',         name: 'wspaces',        moduleId: 'wspaces',        nav: true, title:'Workspaces', auth:false }
+		  { route: 'wspaces',         name: 'wspaces',        moduleId: 'wspaces',        nav: true, title:'Workspaces', auth:false },
+		  { route: 'session',         name: 'session',        moduleId: 'session',        nav: true, title:'Session', auth:false }
 		]);
 
 		this.router = router;

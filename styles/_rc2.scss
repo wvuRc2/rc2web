@@ -1,3 +1,21 @@
+#editor {
+	border-right:3px #eee solid;
+	min-width:100px;
+	margin-right:10px;
+	width:48%;
+}
+
+.ui-resizable {
+	position: relative;
+}
+
+.ui-resizable-handle {
+	position: absolute;
+	font-size:0.1px;
+	z-index:99999;
+	display:block;
+}
+
 .loading {
   position: fixed;
   z-index: 999;
