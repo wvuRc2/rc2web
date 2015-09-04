@@ -4,7 +4,6 @@ import 'fetch';
 
 class rc2stateClass {
 	constructor() {
-		console.log("Rc2State going");
 		this.loggedIn = false;
 		this.user = {};
 		this.login = "";

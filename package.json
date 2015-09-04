@@ -75,6 +75,7 @@
       "aurelia-templating-router": "github:aurelia/templating-router@^0.15.0",
       "bootstrap": "github:twbs/bootstrap@^3.3.4",
       "clean-css": "npm:clean-css@^3.3.8",
+      "codemirror": "npm:codemirror@^5.6.0",
       "components/jquery": "github:components/jquery@^2.1.4",
       "components/jqueryui": "github:components/jqueryui@^1.11.4",
       "core-js": "npm:core-js@^0.9.4",
@@ -90,6 +91,13 @@
     "overrides": {
       "npm:core-js@0.9.18": {
         "main": "client/shim.min"
+      },
+      "npm:codemirror@^5.6.0": {
+      	"shim": {
+      		"lib/codemirror.js": {
+      			"exports": "CodeMirror"
+      		}
+      	}
       }
     }
   }

@@ -2,6 +2,10 @@ import {inject} from 'aurelia-framework';
 import Rc2State from 'Rc2State';
 import $ from 'jquery';
 import {draggable} from 'jqueryui';
+import CodeMirror from "codemirror";
+import 'codemirror/lib/codemirror.css!';
+import 'codemirror/theme/cobalt.css!';
+import 'codemirror/mode/r/r';
 
 @inject(Rc2State)
 export class session {
@@ -10,6 +14,7 @@ export class session {
 	}
 
 	attached() {
+		this.cm = CodeMirror.fromTextArea(this.cmTextArea);
 (function($) {
     $.fn.drags = function(opt) {
 
