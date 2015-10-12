@@ -81,6 +81,27 @@
   box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
 }
 
+.btn-file {
+	position: relative;
+	overflow: hidden;
+}
+
+.btn-file input[type=file] {
+	position:absolute;
+	top:0;
+	right:0;
+	min-width:100%;
+	max-width:100%;
+	font-size:100px;
+	text-align:right;
+	filter:alpha(opacity=0);
+	opacity:0;
+	outline:none;
+	background:white;
+	cursor:inherit;
+	display:block;
+}
+
 /* Animation */
 
 @-webkit-keyframes spinner {

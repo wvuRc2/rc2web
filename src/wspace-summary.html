@@ -7,6 +7,6 @@
 	<li repeat.for="row of wspace.files">
 	<file-summary file.bind="row"></file-summary></li>
 	</ul>
-		
+	<span class="btn btn-default btn-file">Upload <input type="file" change.delegate="fileSelected($event)" wsid="${wspace.id}"></span>
 </div>
 </template>
