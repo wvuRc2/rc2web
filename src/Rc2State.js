@@ -1,9 +1,11 @@
-import {inject} from 'aurelia-framework';
+import {inject, Aurelia} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-fetch-client';
 import 'fetch';
 
+@inject(Aurelia)
 class rc2stateClass {
-	constructor() {
+	constructor(aurelia) {
+		this.aurelia = aurelia
 		this.loggedIn = false;
 		this.user = {};
 		this.login = "";
@@ -29,7 +31,7 @@ class rc2stateClass {
 		let me = Rc2State;
 		let myHeaders = JSON.parse(JSON.stringify(me.headers));
 		let auth = window.localStorage.getItem("lastAuthToken");
-		if (typeof auth === 'undefined') {
+		if (auth == null || typeof auth === 'undefined') {
 			return new Promise(function(resolve,reject) {
 				reject(new RemoteError("unauthorized", 401));
 			});
@@ -45,6 +47,7 @@ class rc2stateClass {
 					res.json().then(objs => {
 						me.loggedInWithJson(objs)
 						resolve(objs)
+						me.aurelia.setRoot('app')
 					});
 				} else {
 					reject(new RemoteError("unauthorized", res.status));
@@ -110,6 +113,10 @@ class rc2stateClass {
 					}
 				});
 		});
+	}
+	
+	logout() {
+		window.localStorage.removeItem("lastAuthToken");
 	}
 }
 

@@ -1,4 +1,4 @@
-import {inject} from 'aurelia-framework';
+import {inject, Aurelia} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import Rc2State from 'Rc2State';
 import {HttpClient} from 'aurelia-fetch-client';
@@ -19,9 +19,9 @@ $.fn.extend({
 });
 
 
-@inject(HttpClient, Rc2State, Router)
+@inject(HttpClient, Rc2State, Router, Aurelia)
 export class login {
-	constructor(http, state, aRouter, eventAgg) {
+	constructor(http, state, aRouter, aurelia, eventAgg) {
 		this.state = state;
 		this.http = http;
 		this.theRouter = aRouter;
@@ -29,6 +29,7 @@ export class login {
 		this.login = 'test';
 		this.errorMessage = "";
 		this.hadError = false;
+		this.aurelia = aurelia;
 
 		http.configure(config => {
 			config.useStandardConfiguration()
@@ -38,8 +39,8 @@ export class login {
 
 	handleLogin() {
 		this.noLongerBusy();
-		this.theRouter.navigateToRoute("wspaces");
-//		history.go(0); //redraws the nav-bar
+		this.aurelia.setRoot('app');
+		this.theRouter.navigate("wspaces");
 	}
 	
 	handleLoginError(error) {
@@ -57,19 +58,21 @@ export class login {
 		$('input, button, a').disable(false);
 	}
 	
-/*	activate() {
+	activate() {
 		console.log("activate()");
-		return this.http.fetch("/login", {headers:this.headers, credentials: 'include'})
+		return this.state.verifyLogin()
 			.then(res => {
 				console.log("lcheck good");
 				//this means res.json() contains is parsed json
 				//should send them to another page
+				this.aurelia.setRoot('app');
+				this.theRouter.navigate("wspaces")
 				})
 			.catch(function(err) {
 				console.log("lcheck bad");
 				//they aren't logged in. show login form
 			})
-	} */
+	}
 	
 	doLogin() {
 		let me = this;

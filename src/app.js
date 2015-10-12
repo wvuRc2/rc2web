@@ -12,15 +12,11 @@ export class App {
 	configureRouter(config, router) {
 		config.title = 'Rc²;';
 		config.map([
-		  { route: ['','welcome'],  name: 'welcome',      moduleId: 'welcome',      nav: true, title:'Welcome' },
-		  { route: 'login',         name: 'login',        moduleId: 'login',        nav: true, title:'Login' },
 		  { route: 'wspaces',         name: 'wspaces',        moduleId: 'wspaces',        nav: true, title:'Workspaces', auth:false },
-		  { route: 'session',         name: 'session',        moduleId: 'session',        nav: true, title:'Session', auth:false }
+		  { route: 'session',         name: 'session',        moduleId: 'session',        nav: true, title:'Session', auth:false },
+		  { route: 'logout',         name: 'logout',        moduleId: 'logout',        nav: true, title:'Logout', auth:false }
 		]);
 
 		this.router = router;
-		this.state.verifyLogin().then(function () {
-			//need to reload stuff possibly?
-		});
 	}
 }

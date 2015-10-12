@@ -18,6 +18,7 @@
         <li repeat.for="row of router.navigation" if.bind="!row.config.auth || state.loggedIn" class="${row.isActive ? 'active' : ''}">
           <a data-toggle="collapse" data-target="#bs-example-navbar-collapse-1.in" href.bind="row.href">${row.title}</a>
         </li>
+
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
