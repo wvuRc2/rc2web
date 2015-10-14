@@ -8,5 +8,9 @@
 	<file-summary file.bind="row"></file-summary></li>
 	</ul>
 	<span class="btn btn-default btn-file">Upload <input type="file" change.delegate="fileSelected($event)" wsid="${wspace.id}"></span>
+	<div id="progress${wspace.id}" class="progress" style="margin-top:10px; max-width:200px;display:none;">
+		<div class="progress-bar progress-bar-striped active" role="progressbar" style="width:100%">
+		</div>
+	</div>
 </div>
 </template>

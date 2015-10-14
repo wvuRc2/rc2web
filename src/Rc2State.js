@@ -11,8 +11,10 @@ class rc2stateClass {
 		this.login = "";
 		this.userId = 0;
 		this.http = new HttpClient();
-		this.headers = {'Accept': 'application/json', 'Content-Type': 'application/json',
-			'Access-Control-Allow-Credentials': 'true'};
+		this.headers = new Map();
+		this.headers.set("Accept", "application/json");
+		this.headers.set("Content-Type", "application/json");
+		this.headers.set('Access-Control-Allow-Credentials', 'true');
 		this.http.configure(config => {
 			config
 				.withBaseUrl("/api")
@@ -84,7 +86,7 @@ class rc2stateClass {
 	loggedInWithJson(json) {
 		let me = Rc2State;
 		me.loginToken = json.token;
-		me.headers['RC2-Auth'] = json.token;
+		me.headers.set('RC2-Auth', json.token);
 		let d = json.user;
 		me.loggedIn = true;
 		me.userId = d["id"];
@@ -117,6 +119,24 @@ class rc2stateClass {
 	
 	logout() {
 		window.localStorage.removeItem("lastAuthToken");
+	}
+	
+	uploadFile(file, wspace, complete, progress) {
+		var data = new FormData();
+		data.append("file", file);
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', `/api/workspaces/${wspace.id}/files/upload`, true);
+		xhr.onload = e => { 
+			console.log("upload complete");
+			if (xhr.status == 201) {
+				complete(xhr);
+				var file = new File(JSON.parse(xhr.responseText));
+				wspace.files.push(file);
+			}
+		};
+		xhr.addEventListener("progress", progress);
+		xhr.setRequestHeader('RC2-Auth', this.loginToken);
+		xhr.send(data);
 	}
 }
 
