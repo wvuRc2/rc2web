@@ -43,6 +43,7 @@
     "karma-coverage": "^0.3.1",
     "karma-jasmine": "^0.3.5",
     "karma-jspm": "2.0.1-beta.2",
+    "moment": "2.10.6",
     "object.assign": "^1.0.3",
     "proxy-middleware": "^0.13.1",
     "require-dir": "^0.1.0",
@@ -81,7 +82,9 @@
       "core-js": "npm:core-js@^0.9.4",
       "css": "github:systemjs/plugin-css@^0.1.11",
       "fetch": "github:github/fetch@^0.9.0",
-      "font-awesome": "npm:font-awesome@^4.3.0"
+      "filesize": "npm:filesize@^3.1.3",
+      "font-awesome": "npm:font-awesome@^4.3.0",
+      "moment": "npm:moment@^2.10.6"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.21",
@@ -93,11 +96,11 @@
         "main": "client/shim.min"
       },
       "npm:codemirror@^5.6.0": {
-      	"shim": {
-      		"lib/codemirror.js": {
-      			"exports": "CodeMirror"
-      		}
-      	}
+        "shim": {
+          "lib/codemirror.js": {
+            "exports": "CodeMirror"
+          }
+        }
       }
     }
   }

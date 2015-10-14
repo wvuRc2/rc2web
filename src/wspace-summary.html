@@ -1,16 +1,24 @@
 <template>
 <require from="file-summary"></require>
+<require from="date-format"></require>
+<require from="filesize-format"></require>
 <div class="wspaceSummary" id="wspaceSummary${wspace.id}">
 
-<h3><a data-toggle="collapse" data-parent="#wspaceSummary${wspace.id}" href="#wgrp-${wspace.id}">${wspace.name}</a></h3>
-	<ul class="wspaceGroup collapse" id="wgrp-${wspace.id}">
-	<li repeat.for="row of wspace.files">
-	<file-summary file.bind="row"></file-summary></li>
-	</ul>
+<h3><a data-toggle="collapse" data-toggle="wgrp-${wspace.id}" data-parent="#wspaceSummary${wspace.id}" href="#wgrp-${wspace.id}">${wspace.name}</a></h3>
+	<div class="" style="width:100%">
+	<table class="table" id="wgrp-${wspace.id}">
+	<tr repeat.for="row of wspace.files">
+		<td>${row.name}</td>
+		<td class="text-right">${row.fileSize | fileSize}</td>
+		<td class="text-right">${row.lastModified | dateFormat}</td>
+		<td class="text-right"><span class="glyphicon glyphicon-trash"></span></td>
+	</tr>
+	</table>
 	<span class="btn btn-default btn-file">Upload <input type="file" change.delegate="fileSelected($event)" wsid="${wspace.id}"></span>
 	<div id="progress${wspace.id}" class="progress" style="margin-top:10px; max-width:200px;display:none;">
 		<div class="progress-bar progress-bar-striped active" role="progressbar" style="width:100%">
 		</div>
+	</div>
 	</div>
 </div>
 </template>
