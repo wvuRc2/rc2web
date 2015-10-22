@@ -1,3 +1,4 @@
+
 #sessionContainer {
 	display: -webkit-flex;
 	display: flex;
@@ -84,6 +85,9 @@
 .btn-file {
 	position: relative;
 	overflow: hidden;
+	&[disabled] {
+		background-color:#eee;
+	}
 }
 
 .btn-file input[type=file] {
@@ -100,6 +104,11 @@
 	background:white;
 	cursor:inherit;
 	display:block;
+	
+	&[disabled] {
+		cursor:default;
+		background-color:#fff;
+	}
 }
 
 /* Animation */

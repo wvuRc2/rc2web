@@ -11,7 +11,7 @@
 		<td>${row.name}</td>
 		<td class="text-right">${row.fileSize | fileSize}</td>
 		<td class="text-right">${row.lastModified | dateFormat}</td>
-		<td class="text-right"><span class="glyphicon glyphicon-trash"></span></td>
+		<td class="text-right"><span class="fa fa-trash-o fa-lg"></span></td>
 	</tr>
 	</table>
 	<span class="btn btn-default btn-file">Upload <input type="file" change.delegate="fileSelected($event)" wsid="${wspace.id}"></span>
