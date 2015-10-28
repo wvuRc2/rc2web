@@ -1,3 +1,4 @@
+//TODO: convert code to use Headers() instead of a Map()
 import {inject, Aurelia} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-fetch-client';
 import 'fetch';
@@ -31,14 +32,15 @@ class rc2stateClass {
 	
 	verifyLogin() {
 		let me = Rc2State;
-		let myHeaders = JSON.parse(JSON.stringify(me.headers));
+		let myHeaders = new Map(me.headers);
 		let auth = window.localStorage.getItem("lastAuthToken");
 		if (auth == null || typeof auth === 'undefined') {
 			return new Promise(function(resolve,reject) {
 				reject(new RemoteError("unauthorized", 401));
 			});
 		}
-		myHeaders["RC2-Auth"] = auth;
+		myHeaders.set("RC2-Auth", auth);
+		myHeaders.set("Content-Type", "application/json")
 		var promise = new Promise(function(resolve, reject) {
 			me.http.fetch("/login", {	method: 'get', 
 									headers:myHeaders,
@@ -62,10 +64,14 @@ class rc2stateClass {
 	
 	attemptLogin(theLogin, thePassword) {
 		let me = Rc2State;
+		let headers = new Headers()
+		me.headers.forEach((value, key) => { headers.append(key, value) })
+		headers.set("Content-Type", "application/json")
+		headers.append("X-Jersey-Tracing-Accept", true)
 		let body = JSON.stringify({login:theLogin, password:thePassword})
 		var promise = new Promise(function(resolve, reject) {
 			me.http.fetch("/login", {	method: 'post', 
-									headers:me.headers,
+									headers:headers,
 									credentials: 'include',
 									body: body})
 			.then(res => {
