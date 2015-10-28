@@ -7,7 +7,7 @@ var httpProxy = require('http-proxy');
 // to create a dev server instance
 // at http://localhost:9000
 gulp.task('serve', ['build'], function(done) {
-	var proxyOptions = {target:"http://barney.stat.wvu.edu:8088/"};
+	var proxyOptions = {target:"http://localhost:8088/"};
 	var proxy = httpProxy.createProxyServer(proxyOptions);
 	var proxyMiddleware = function(req, res, next) {
 		if (req.url.indexOf('/api') != -1) {

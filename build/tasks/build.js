@@ -40,6 +40,11 @@ gulp.task('build-css', function() {
           .pipe(gulp.dest(paths.output));
 });
 
+gulp.task('copy-files', function() {
+	return gulp.src('src/**/*.json')
+		.pipe(gulp.dest('dist/'));
+});
+
 // this task calls the clean task (located
 // in ./clean.js), then runs the build-system
 // and build-html tasks in parallel
@@ -47,7 +52,7 @@ gulp.task('build-css', function() {
 gulp.task('build', function(callback) {
   return runSequence(
     'clean',
-    ['build-system', 'build-html', 'build-css'],
+    ['build-system', 'build-html', 'build-css', 'copy-files'],
     callback
   );
 });
