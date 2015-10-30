@@ -18,6 +18,12 @@
 	resize: none;
 }
 
+#console {
+	font-family: Menlo, monospaced;
+	overflow-y:scroll;
+	height:90vh;
+}
+
 .handle {
 	cursor: col-resize;
 	width:5px;

@@ -41,7 +41,7 @@ export class session {
 		};
 	}
 	executeQuery() {
-		this.websocket.send('{"msg":"execute", "code":"plot(rnorm(121);rnorm(21)"}');
+		this.websocket.send('{"msg":"execute", "code":"rnorm(121)"}');
 	}
 	requestHelp() {
 		this.websocket.send('{"msg":"help","topic":"print"}')
