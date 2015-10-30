@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
 var runSequence = require('run-sequence');
 var changed = require('gulp-changed');
 var plumber = require('gulp-plumber');
@@ -37,6 +38,7 @@ gulp.task('build-css', function() {
           .pipe(sourcemaps.init())
           .pipe(sass())
           .pipe(sourcemaps.write())
+          .pipe(autoprefixer({browsers:['last 2 versions'], cascade:false}))
           .pipe(gulp.dest(paths.output));
 });
 
