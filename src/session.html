@@ -5,14 +5,23 @@
 <div class="col-sm-12" id="sessionContainer">
 	<div id="editor" class="sessionBox">
 		<textarea style="width:95%; min-height:200px;" ref="cmTextArea">some text goes here</textarea>
+		<input type="button" click.delegate="requestHelp()" value="Help">
+		<input type="button" click.delegate="executeQuery()" value="Execute">
 	</div>
+
 	<div id="splitter" class="handle"></div>
+
 	<div id="console" class="sessionBox" style="border=1px solid black;">
+		<div id="results"></div>
 	
+		<div id="inputAnchor">
+			<div id="consoleField">
+				<input type="text" name="input" value.bind="currentInput" keyup.delegate="checkForReturnKey($event)">
+				<input type="button" click.delegate="executeConsoleQuery()" value="Execute">
+			</div>
+		</div>
 	</div>
 </div>
 </div>
 </div>
-<input type="button" click.delegate="requestHelp()" value="Help">
-<input type="button" click.delegate="executeQuery()" value="Execute">
 </template>
