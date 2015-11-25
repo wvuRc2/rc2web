@@ -1,5 +1,6 @@
 import {inject} from 'aurelia-framework';
 import Rc2State from 'Rc2State';
+import makeSessionImage from 'SessionImage';
 import $ from 'jquery';
 import CodeMirror from "codemirror";
 import 'codemirror/lib/codemirror.css!';
@@ -70,34 +71,41 @@ export class session {
 		}
 		var qrcode = "qr" + msg.queryId;
 		var query = '<div class="qgroup" id="q' + msg.queryId + '">' +
-			'<a data-toggle="collapse" href="#' + qrcode + '" aria-controls="' + qrcode + '">' +
-			'<span class="fa fa-caret-down fa-fw qtoggle"></span></a>' + label + 
+			'<a data-toggle="collapse" href="#' + qrcode + '" aria-controls="' + qrcode + 
+			'" class="qlink">' +
+			'<span class="fa fa-caret-down fa-fw fa-2x qtoggle"></span></a>' + label + 
 			'<div id="' + qrcode + '" class="collapse in qresults"></div></div>';
 		$("#results").append(query);
-		$('#' + qrcode).on('shown.bs.collapse', function() {
+		var sel = '#' + qrcode;
+		$(sel).on('shown.bs.collapse', function() {
 			$('#q' + msg.queryId + ' a span').removeClass('fa-caret-right').addClass('fa-caret-down');
 		});
-		$('#' + qrcode).on('hidden.bs.collapse', function() {
+		$(sel).on('hidden.bs.collapse', function() {
 			$('#q' + msg.queryId + ' a span').removeClass('fa-caret-down').addClass('fa-caret-right');
 		});
 	}
 	
 	showResults(msg) {
+		var objsToInsert = [];
 		if (msg.string && msg.string.length > 0) {
-			var newtext = $('<div class="qresults"></div>').text(msg.string)
-			if (msg.queryId > 0) {
-				$("#qr" + msg.queryId).append(newtext);
-			} else {
-				$("#results").append(newtext)
-			}
+			objsToInsert.push($('<div class="qresults"></div>').text(msg.string));
 		}
 		if (msg.images && msg.images.length > 0) {
-			var newtext = '<div class="imageGroup">'
+			//images are appended after the text
+			var imgHtml = '<div class="imageGroup">'
 			msg.images.forEach(img => {
-				newtext += '<span class="fa fa-file-image-o fa-2x" imgid="' + img.id + '"></span>'
+				imgHtml += '<span class="qimg fa fa-file-image-o fa-3x" imgid="' + img.id + '"></span>'
 			})
-			newtext += '</div>'
-			$("#results").append(newtext)
+			imgHtml += '</div>'
+			var imgElems = $.parseHTML(imgHtml)
+			objsToInsert.push($(imgElems))
+			var images = msg.images.map(src => { return makeSessionImage(src) });
+			$(imgElems).data("images", images);
+		}
+		if (msg.queryId > 0) {
+			$("#qr" + msg.queryId).append(objsToInsert);
+		} else {
+			$("#results").append(objsToInsert)
 		}
 	}
 	

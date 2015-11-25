@@ -1,5 +1,22 @@
 .qgroup {
-	margin-bottom: 1.1em;
+	margin-left:2.6em;
+	margin-bottom: 1.2em;
+}
+
+.qtoggle {
+	vertical-align: middle;
+}
+
+.qlink {
+	margin-left:-2.6em; //reverses indent in parent qgroup
+}
+
+.qimg {
+	margin-right: 8px;
+	margin-top: 8px;
+}
+
+.qresults {
 }
 
 #sessionContainer {
