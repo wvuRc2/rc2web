@@ -94,7 +94,9 @@ export class session {
 			//images are appended after the text
 			var imgHtml = '<div class="imageGroup">'
 			msg.images.forEach(img => {
-				imgHtml += '<span class="qimg fa fa-file-image-o fa-3x" imgid="' + img.id + '"></span>'
+				imgHtml += '<span class="qimg fa fa-file-image-o fa-3x" data-toggle="tooltip" ' +
+					'title="' + img.name.replace(/"/g, '&quot;') + '" imgid="' + img.id + '"></span>' 
+				setTimeout(function() { $('[imgid="' + img.id + '"]').tooltip() })
 			})
 			imgHtml += '</div>'
 			var imgElems = $.parseHTML(imgHtml)
