@@ -19,6 +19,32 @@
 .qresults {
 }
 
+.modal.and.carousel {
+	position:absolute;
+}
+
+.modal-body {
+	min-height:600px;
+	min-width:600px;
+}
+
+#lbox .carousel-caption {
+	position:static;
+	color:black;
+}
+
+.carousel-inner img {
+	margin: auto;
+}
+
+.carousel-indicators .cident {
+	background-color:#aaa;
+}
+
+.carousel-indicators .cident.active {
+	background-color:#000;
+}
+
 #sessionContainer {
 	display: flex;
 	width: 100%;

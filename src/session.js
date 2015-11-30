@@ -45,7 +45,30 @@ export class session {
 			clearTimeout(this.timerId);
 			this.timerId = undefined;
 		};
+		$("#lbox").on('show.bs.modal', function(event) {
+			var button = $(event.relatedTarget)
+			var grpIdent = button.data('ig')
+			var iconContainer = $('#' + grpIdent)
+			var images = iconContainer.data('images')
+			var inner = $(".carousel-inner")
+			var inds = $(".carousel-indicators")
+			var activeIndex = button.data('index')
+			inner.empty()
+			inds.empty()
+			images.forEach((img, index) => {
+				var isActive = activeIndex == index ? " active" : ""
+				var ihtml = '<div class="item center' + isActive + '"><img id="img' + img.id + '">' +
+					'<div class="carousel-caption">' + img.name + '</div></div>';
+				var imgobj = $.parseHTML(ihtml)
+				$(imgobj).find("img:first").attr('src', img.source)
+				inner.append(imgobj)
+				ihtml = '<li data-target="#lbox" data-slide-to="' + index + '" class="cident' + isActive + '"></li>'
+				inds.append(ihtml)
+				isActive = ""
+			})
+		})
 	}
+	
 	checkForReturnKey(e) {
 		if (e.keyCode === 13)
 			this.executeConsoleQuery();
@@ -92,10 +115,11 @@ export class session {
 		}
 		if (msg.images && msg.images.length > 0) {
 			//images are appended after the text
-			var imgHtml = '<div class="imageGroup">'
-			msg.images.forEach(img => {
-				imgHtml += '<span class="qimg fa fa-file-image-o fa-3x" data-toggle="tooltip" ' +
-					'title="' + img.name.replace(/"/g, '&quot;') + '" imgid="' + img.id + '"></span>' 
+			var imgHtml = '<div class="imageGroup" id="ig' + msg.images[0].batchId + '">'
+			msg.images.forEach((img, index) => {
+				imgHtml += '<a href="#lbox" data-toggle="modal" data-target="#lbox" data-ig="ig' + 
+					img.batchId + '" data-index="' + index + '"><span class="qimg fa fa-file-image-o fa-3x" data-toggle="tooltip" ' +
+					'title="' + img.name.replace(/"/g, '&quot;') + '" imgid="' + img.id + '"></span></a>' 
 				setTimeout(function() { $('[imgid="' + img.id + '"]').tooltip() })
 			})
 			imgHtml += '</div>'
@@ -109,6 +133,11 @@ export class session {
 		} else {
 			$("#results").append(objsToInsert)
 		}
+	}
+	
+	prepLightbox() {
+		$(".carousel-inner").empty()
+		
 	}
 	
 	handleTextMessage(jsonString) {
