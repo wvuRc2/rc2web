@@ -1,4 +1,4 @@
-import 'bootstrap';
+import bootstrap from 'bootstrap/js/bootstrap.min';
 import 'bootstrap/css/bootstrap.css!';
 import {inject} from 'aurelia-framework';
 import Rc2State from 'Rc2State';
