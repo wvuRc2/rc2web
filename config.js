@@ -53,6 +53,7 @@ System.config({
     "jquery": "github:components/jquery@2.1.4",
     "jqueryui": "github:components/jqueryui@1.11.4",
     "moment": "npm:moment@2.10.6",
+    "tether": "npm:tether@1.1.1",
     "github:aurelia/animator-css@0.15.0": {
       "aurelia-metadata": "github:aurelia/metadata@0.7.3",
       "aurelia-templating": "github:aurelia/templating@0.14.1"
@@ -624,6 +625,10 @@ System.config({
     "npm:supports-color@3.1.2": {
       "has-flag": "npm:has-flag@1.0.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:tether@1.1.1": {
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.0"
     },
     "npm:through2@2.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.2",
