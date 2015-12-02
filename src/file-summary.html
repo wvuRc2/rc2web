@@ -1,7 +1,19 @@
 <template>
-<div class="fileSummary">
+<require from="filesize-format"></require>
+<require from="date-format"></require>
+<div class="fileSummary" style="width:100%">
 
-<h4>${file.name}</h4>
+	<span class="fa-stack fa-lg">
+		<span class="fa-stack-1x filetype-text">${file.extension}</span>
+		<i class="fa fa-file-o fa-stack-2x"></i>
+	</span>
+
+		${file.name}
+
+	<br>
+	${file.fileSize | fileSize}
+	<br>
+	${file.lastModified | dateFormat}
 		
 </div>
 </template>

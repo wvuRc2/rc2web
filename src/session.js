@@ -13,12 +13,13 @@ export class session {
 	constructor(state) {
 		this.state = state;
 		this.currentInput = '';
+		this.workspace = state.workspaces[0]
 	}
 
 	attached() {
 		let me = this
-		this.cm = CodeMirror.fromTextArea(this.cmTextArea);
-		let d =document;
+		this.cm = CodeMirror.fromTextArea(this.cmTextArea, {lineNumbers:true});
+		let d = document;
 		this.splitter = new Splitter(
 									d.getElementById('splitter'), 
 									d.getElementById('editor'),
@@ -45,28 +46,56 @@ export class session {
 			clearTimeout(this.timerId);
 			this.timerId = undefined;
 		};
-		$("#lbox").on('show.bs.modal', function(event) {
-			var button = $(event.relatedTarget)
-			var grpIdent = button.data('ig')
-			var iconContainer = $('#' + grpIdent)
-			var images = iconContainer.data('images')
-			var inner = $(".carousel-inner")
-			var inds = $(".carousel-indicators")
-			var activeIndex = button.data('index')
-			inner.empty()
-			inds.empty()
-			images.forEach((img, index) => {
-				var isActive = activeIndex == index ? " active" : ""
-				var ihtml = '<div class="item center' + isActive + '"><img id="img' + img.id + '">' +
-					'<div class="carousel-caption">' + img.name + '</div></div>';
-				var imgobj = $.parseHTML(ihtml)
-				$(imgobj).find("img:first").attr('src', img.source)
-				inner.append(imgobj)
-				ihtml = '<li data-target="#lbox" data-slide-to="' + index + '" class="cident' + isActive + '"></li>'
-				inds.append(ihtml)
-				isActive = ""
-			})
+		$("#lbox").on('show.bs.modal', me.setupImageModal)
+//		$("#openModal").on('show.bs.modal', function(e) {
+//			me.setupOpenModal(e) })
+		$(document).on("click", ".tbaction", function(e) {
+			var clickSrc = $(this)
+			var action = clickSrc.data('action')
+			console.log("got action click:" + action)
+			if (action == 'new') {
+				me.createNewDocument(clickSrc.data('ftype'))
+			}
+			e.preventDefault()
 		})
+	}
+	
+	setupOpenModal(event) {
+		var container = $("#openModalBody")
+		container.empty()
+		this.workspace.files.forEach((file, idx) => {
+			var ihtml = '<div class="openFileEntry"><span class="fa-stack fa-lg">' +
+				'<span class="fa-stack-1x filetype-text">' + file.extension + '</span>' +
+				'<i class="fa fa-file-o fa-stack-2x"></i></span>' + file.name + '</div>'
+			container.append(ihtml)
+		})
+	}
+	
+	setupImageModal(event) {
+		var button = $(event.relatedTarget)
+		var grpIdent = button.data('ig')
+		var iconContainer = $('#' + grpIdent)
+		var images = iconContainer.data('images')
+		var inner = $(".carousel-inner")
+		var inds = $(".carousel-indicators")
+		var activeIndex = button.data('index')
+		inner.empty()
+		inds.empty()
+		images.forEach((img, index) => {
+			var isActive = activeIndex == index ? " active" : ""
+			var ihtml = '<div class="item center' + isActive + '"><img id="img' + img.id + '">' +
+				'<div class="carousel-caption">' + img.name + '</div></div>';
+			var imgobj = $.parseHTML(ihtml)
+			$(imgobj).find("img:first").attr('src', img.source)
+			inner.append(imgobj)
+			ihtml = '<li data-target="#lbox" data-slide-to="' + index + '" class="cident' + isActive + '"></li>'
+			inds.append(ihtml)
+			isActive = ""
+		})
+	}
+	
+	createNewDocument(doctype) {
+		console.log("creating:" + doctype)
 	}
 	
 	checkForReturnKey(e) {
@@ -133,11 +162,6 @@ export class session {
 		} else {
 			$("#results").append(objsToInsert)
 		}
-	}
-	
-	prepLightbox() {
-		$(".carousel-inner").empty()
-		
 	}
 	
 	handleTextMessage(jsonString) {

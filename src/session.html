@@ -1,10 +1,35 @@
 <template>
+<require from="file-summary"></require>
 <div class="loading"></div>
 <div class="container-fluid" style="margin-top:20px">
 <div class="row" id="sessionRow">
 <div class="col-sm-12" id="sessionContainer">
 	<div id="editor" class="sessionBox">
-		<textarea style="width:95%; min-height:200px;" ref="cmTextArea">some text goes here</textarea>
+		<div class="btn-toolbar editor-tb" role="toolbar">
+			<!-- new document button -->
+			<div class="btn-group">
+				<button type="button" class="btn btn-default dropdown-toggle" 
+				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span class="fa-stack fa-sm editor-tb">
+					<i class="fa fa-file-o fa-stack-2x"></i>
+					<i class="fa fa-plus-circle fa-stack-1x"></i>
+					</span>
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="#" class="tbaction" data-action="new" data-ftype="R">R Script</a></li>
+					<li><a href="#" class="tbaction" data-action="new" data-ftype="Rmd">RMarkdown File</a></li>
+					<li><a href="#" class="tbaction" data-action="new" data-ftype="Rnw">Sweave File</a></li>
+					<li><a href="#" class="tbaction" data-action="new" data-ftype="txt">Plain Text File</a></li>
+				</ul>
+				<!-- open button -->
+				<button type="button" class="btn btn-default" data-toggle="modal" data-target="#openModal" data-action="open"><span class="fa fa-folder-o editor-tb"></span></button>
+				<!-- save button -->
+				<button type="button" class="btn btn-default tbaction" data-action="save"><span class="fa fa-save editor-tb"></span></button>
+			</div>
+
+		</div>
+		<textarea autofocus style="width:95%; min-height:200px;" ref="cmTextArea">some text goes here</textarea>
 		<input type="button" click.delegate="requestHelp()" value="Help">
 		<input type="button" click.delegate="executeQuery()" value="Execute">
 	</div>
@@ -23,6 +48,29 @@
 	</div>
 </div>
 </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="openModal">
+	<div class="modal-dialog">
+		<div class="modal-content" id="openModalContent">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" 
+				aria-label="Close">
+					<span arai-hidden="true" class="fa fa-close"></span>
+				</button>
+				<h4 class="modal-title">Open File&hellip;</h4>
+			</div>
+			<div class="modal-body" id="openModalBody">
+				<table class="table-hover" style="width:100%">
+					<div repeat.for="file of workspace.files">
+					<tr><td>
+						<file-summary file.bind="file"></file-summary>
+					</td></tr>
+					</div>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="modal fade and carousel slide" tabindex="-1" role="dialog" id="lbox">

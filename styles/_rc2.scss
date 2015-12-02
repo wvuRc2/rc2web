@@ -1,3 +1,33 @@
+//this is bad for accessability, but chrome mac has horrible button focus problems
+.btn:focus {
+	outline:none;
+}
+
+#openModalBody {
+	max-width:400px;
+	min-height:300px;
+	overflow-y: auto;
+}
+
+.filetype-text {
+	font-size:.7em;
+	font-weight:700;
+	font-family:'Oswald';
+}
+
+.fa-sm {
+	font-size:0.63em;
+}
+
+.editor-tb {
+	color:#666;
+}
+
+.CodeMirror {
+	margin-bottom:10px;
+	border: 1px solid #aaa;
+}
+
 .qgroup {
 	margin-left:2.6em;
 	margin-bottom: 1.2em;
@@ -20,7 +50,7 @@
 }
 
 .modal.and.carousel {
-	position:absolute;
+	position:absolute; //needed because carousel overrides
 }
 
 .modal-body {

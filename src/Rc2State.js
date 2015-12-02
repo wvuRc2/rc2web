@@ -164,6 +164,7 @@ export class File {
 		this.version = jsonObj["version"];
 		this.name = jsonObj["name"];
 		this.fileSize = jsonObj["fileSize"];
+		this.extension = this.name.split('.').pop()
 	}
 };
 
