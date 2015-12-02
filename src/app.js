@@ -1,8 +1,7 @@
-import bootstrap from 'bootstrap/js/bootstrap.min';
-import 'bootstrap/css/bootstrap.css!';
+//import bootstrap from 'bootstrap/js/bootstrap.min';
+//import 'bootstrap/css/bootstrap.css!';
 import {inject} from 'aurelia-framework';
 import Rc2State from 'Rc2State';
-import tether from 'tether';
 
 @inject(Rc2State)
 export class App {
