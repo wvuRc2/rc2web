@@ -15,6 +15,29 @@
 	font-family:'Oswald';
 }
 
+.fileSummary:hover {
+	cursor:pointer;
+	background-color:#f5f5f5;
+}
+
+.file-sum-img {
+	vertical-align:text-bottom;
+	margin-left:10px;
+}
+
+.file-sum-imgcontainer {
+	flex: 2 0 auto;
+}
+
+.file-sum-title {
+	font-size:large;
+}
+
+.file-sum-details {
+	font-size:small;
+	flex: 0 0 auto;
+}
+
 .fa-sm {
 	font-size:0.63em;
 }

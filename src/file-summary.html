@@ -1,19 +1,19 @@
 <template>
 <require from="filesize-format"></require>
 <require from="date-format"></require>
-<div class="fileSummary" style="width:100%">
+<div class="fileSummary row"">
+	<div class="col-md-6 file-sum-imgcontainer">
+		<span class="fa-stack fa-lg file-sum-img">
+			<span class="fa-stack-1x filetype-text">${file.extension}</span>
+			<i class="fa fa-file-o fa-stack-2x"></i>
+		</span>
+		<span class="file-sum-title">${file.name}</span>
+	</div>
 
-	<span class="fa-stack fa-lg">
-		<span class="fa-stack-1x filetype-text">${file.extension}</span>
-		<i class="fa fa-file-o fa-stack-2x"></i>
-	</span>
-
-		${file.name}
-
+	<div class="col-md-6 file-sum-details">
+	<strong>Size:</strong> ${file.fileSize | fileSize}
 	<br>
-	${file.fileSize | fileSize}
-	<br>
-	${file.lastModified | dateFormat}
-		
+	<strong>Modified:</strong> ${file.lastModified | dateFormat}
+	</div>
 </div>
 </template>

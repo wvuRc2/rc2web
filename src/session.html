@@ -60,14 +60,10 @@
 				</button>
 				<h4 class="modal-title">Open File&hellip;</h4>
 			</div>
-			<div class="modal-body" id="openModalBody">
-				<table class="table-hover" style="width:100%">
+			<div class="modal-body container-fluid" id="openModalBody">
 					<div repeat.for="file of workspace.files">
-					<tr><td>
-						<file-summary file.bind="file"></file-summary>
-					</td></tr>
+						<file-summary file.bind="file" containerless></file-summary>
 					</div>
-				</table>
 			</div>
 		</div>
 	</div>

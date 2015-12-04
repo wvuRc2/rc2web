@@ -179,5 +179,6 @@ export class Workspace {
 			files.push(new File(aFile));
 		}
 		this.files = files;
+		this.files.sort();
 	}
 }

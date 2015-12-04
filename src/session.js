@@ -6,6 +6,7 @@ import CodeMirror from "codemirror";
 import 'codemirror/lib/codemirror.css!';
 import 'codemirror/theme/cobalt.css!';
 import 'codemirror/mode/r/r';
+import 'bootstrap/dist/js/bootstrap.js'
 import Splitter from 'splitter';
 
 @inject(Rc2State)
@@ -47,8 +48,11 @@ export class session {
 			this.timerId = undefined;
 		};
 		$("#lbox").on('show.bs.modal', me.setupImageModal)
-//		$("#openModal").on('show.bs.modal', function(e) {
-//			me.setupOpenModal(e) })
+		$('#openModal').on('show.bs.modal', e => {
+			$('#openModal').one('hidden.bs.modal', e => {
+				$('#openModalBody').empty()
+			})
+		})
 		$(document).on("click", ".tbaction", function(e) {
 			var clickSrc = $(this)
 			var action = clickSrc.data('action')
@@ -58,17 +62,11 @@ export class session {
 			}
 			e.preventDefault()
 		})
+		document.addEventListener('openFile', this.openDocument)
 	}
 	
-	setupOpenModal(event) {
-		var container = $("#openModalBody")
-		container.empty()
-		this.workspace.files.forEach((file, idx) => {
-			var ihtml = '<div class="openFileEntry"><span class="fa-stack fa-lg">' +
-				'<span class="fa-stack-1x filetype-text">' + file.extension + '</span>' +
-				'<i class="fa fa-file-o fa-stack-2x"></i></span>' + file.name + '</div>'
-			container.append(ihtml)
-		})
+	detached() {
+		document.removeEventListener('openFile', this.openDocument)
 	}
 	
 	setupImageModal(event) {
@@ -92,6 +90,11 @@ export class session {
 			inds.append(ihtml)
 			isActive = ""
 		})
+	}
+	
+	openDocument(e) {
+		console.log("opening:" + e.detail.name)
+		$('#openModal').modal('hide')
 	}
 	
 	createNewDocument(doctype) {
