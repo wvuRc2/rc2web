@@ -6,7 +6,7 @@ import CodeMirror from "codemirror";
 import 'codemirror/lib/codemirror.css!';
 import 'codemirror/theme/cobalt.css!';
 import 'codemirror/mode/r/r';
-import 'bootstrap/dist/js/bootstrap.js'
+import '../bootstrap/dist/js/bootstrap.js'
 import Splitter from 'splitter';
 
 @inject(Rc2State)
@@ -94,7 +94,7 @@ export class session {
 	
 	openDocument(e) {
 		console.log("opening:" + e.detail.name)
-		$('#openModal').modal('hide')
+		$('#openModal').modal('toggle')
 	}
 	
 	createNewDocument(doctype) {

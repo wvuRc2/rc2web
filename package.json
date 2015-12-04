@@ -75,7 +75,6 @@
       "aurelia-templating-binding": "github:aurelia/templating-binding@^0.14.0",
       "aurelia-templating-resources": "github:aurelia/templating-resources@^0.14.0",
       "aurelia-templating-router": "github:aurelia/templating-router@^0.15.0",
-      "bootstrap": "github:twbs/bootstrap@^3.3.4",
       "clean-css": "npm:clean-css@^3.3.8",
       "codemirror": "npm:codemirror@^5.6.0",
       "components/jquery": "github:components/jquery@^2.1.4",

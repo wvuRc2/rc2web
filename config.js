@@ -39,7 +39,6 @@ System.config({
     "aurelia/fetch-client": "github:aurelia/fetch-client@0.1.1",
     "babel": "npm:babel-core@5.8.23",
     "babel-runtime": "npm:babel-runtime@5.8.20",
-    "bootstrap": "github:twbs/bootstrap@3.3.5",
     "clean-css": "npm:clean-css@3.3.8",
     "codemirror": "npm:codemirror@5.6.0",
     "components/jquery": "github:components/jquery@2.1.4",
@@ -213,9 +212,6 @@ System.config({
     },
     "github:jspm/nodelibs-vm@0.1.0": {
       "vm-browserify": "npm:vm-browserify@0.0.4"
-    },
-    "github:twbs/bootstrap@3.3.5": {
-      "jquery": "github:components/jquery@2.1.4"
     },
     "npm:amdefine@1.0.0": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
