@@ -28,6 +28,7 @@ class rc2stateClass {
 					}
 				});
 		});
+		this.websocketUrl = 'ws://localhost:8088/ws/1'
 	}
 	
 	verifyLogin() {
@@ -144,6 +145,38 @@ class rc2stateClass {
 		xhr.setRequestHeader('RC2-Auth', this.loginToken);
 		xhr.send(data);
 	}
+	
+	fetchFileContentsPromise(file) {
+		let me = this
+		let myHeaders = new Map(me.headers);
+		//TODO: add e-tag header if have content cached
+		if (file.content != null) {
+			myHeaders.set('If-None-Match', file.etag())
+		}
+		var promise = new Promise(function(resolve, reject) {
+			me.http.fetch('/workspaces/' + file.wspaceId + '/files/' + file.id, 
+				{	method: 'get', 
+					headers:myHeaders,
+					credentials: 'include',
+			})
+			.then(res => {
+				if (res.status === 200) {
+					res.text().then(txt => {
+						file.content = txt
+						resolve(file)
+					});
+				} else if (res.status == 304) {
+					//content didn't change
+					resolve(file)
+				} else {
+					reject(new RemoteError("unknown error", res.status));
+				}
+			})
+			.catch(err => { reject(err); });
+		});
+		return promise;
+	}
+
 }
 
 let Rc2State = new rc2stateClass();
@@ -157,14 +190,19 @@ export class RemoteError extends TypeError {
 }
 
 export class File {
-	constructor(jsonObj) {
-		this.lastModified = new Date(0);
-		this.lastModified.setSeconds(jsonObj["lastModified"]/1000);
-		this.id = jsonObj["id"];
-		this.version = jsonObj["version"];
-		this.name = jsonObj["name"];
-		this.fileSize = jsonObj["fileSize"];
+	constructor(jsonObj, wspaceId) {
+		this.lastModified = new Date(0)
+		this.lastModified.setSeconds(jsonObj["lastModified"]/1000)
+		this.id = jsonObj["id"]
+		this.version = jsonObj["version"]
+		this.name = jsonObj["name"]
+		this.fileSize = jsonObj["fileSize"]
 		this.extension = this.name.split('.').pop()
+		this.wspaceId = wspaceId
+		this.content = null
+	}
+	etag() {
+		return `f/$(this.id)/${this.version}`
 	}
 };
 
@@ -176,7 +214,7 @@ export class Workspace {
 		this.userId = jsonObj["userId"];
 		var files = [];
 		for (let aFile of jsonObj["files"]) {
-			files.push(new File(aFile));
+			files.push(new File(aFile, this.id));
 		}
 		this.files = files;
 		this.files.sort();

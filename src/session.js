@@ -26,7 +26,7 @@ export class session {
 									d.getElementById('editor'),
 									d.getElementById('console')
 									);
-		this.websocket = new WebSocket('ws://localhost:8088/ws/1', [this.state.loginToken]);
+		this.websocket = new WebSocket(this.state.websocketUrl, [this.state.loginToken]);
 		this.websocket.onopen = e => {
 			console.log('websocket open');
 			this.websocket.binaryType = 'arraybuffer';
@@ -49,9 +49,9 @@ export class session {
 		};
 		$("#lbox").on('show.bs.modal', me.setupImageModal)
 		$('#openModal').on('show.bs.modal', e => {
-			$('#openModal').one('hidden.bs.modal', e => {
-				$('#openModalBody').empty()
-			})
+//			$('#openModal').one('hidden.bs.modal', e => {
+//				$('#openModalBody').empty()
+//			})
 		})
 		$(document).on("click", ".tbaction", function(e) {
 			var clickSrc = $(this)
@@ -62,7 +62,7 @@ export class session {
 			}
 			e.preventDefault()
 		})
-		document.addEventListener('openFile', this.openDocument)
+		document.addEventListener('openFile', function(e) { me.openDocument(e)})
 	}
 	
 	detached() {
@@ -93,8 +93,12 @@ export class session {
 	}
 	
 	openDocument(e) {
+		let me = this
 		console.log("opening:" + e.detail.name)
 		$('#openModal').modal('toggle')
+		this.state.fetchFileContentsPromise(e.detail).then(function(file) {
+			me.cm.setValue(file.content)
+		})
 	}
 	
 	createNewDocument(doctype) {
